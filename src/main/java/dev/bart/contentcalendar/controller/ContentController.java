@@ -1,7 +1,11 @@
 package dev.bart.contentcalendar.controller;
 
 import dev.bart.contentcalendar.model.Content;
+import dev.bart.contentcalendar.model.Status;
 import dev.bart.contentcalendar.repository.ContentCollectionRepository;
+import dev.bart.contentcalendar.repository.ContentJdbcTemplateRepository;
+import dev.bart.contentcalendar.repository.ContentRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +16,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/content")
+@CrossOrigin
 public class ContentController {
 
-    private final ContentCollectionRepository repository;
+    // in memory repo
+    private final ContentRepository repository;
+
+
 
     @Autowired
-    public ContentController(ContentCollectionRepository repository) {
+    public ContentController(ContentRepository repository) {
         this.repository = repository;
     }
 
@@ -34,7 +42,7 @@ public class ContentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void create(@RequestBody Content content) {
+    public void create(@Valid @RequestBody Content content) {
         repository.save(content);
     }
 
@@ -50,6 +58,16 @@ public class ContentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        repository.delete(id);
+        repository.deleteById(id);
+    }
+
+    @GetMapping("/filter/{keyword}")
+    public List<Content> findByTitle(@PathVariable String keyword) {
+        return repository.findAllByTitleContains(keyword);
+    }
+
+    @GetMapping("filter/status/{status}")
+    public List<Content> findByStatus(@PathVariable Status status) {
+        return repository.listByStatus(status);
     }
 }
