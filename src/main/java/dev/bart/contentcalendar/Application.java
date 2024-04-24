@@ -1,5 +1,6 @@
 package dev.bart.contentcalendar;
 
+import dev.bart.contentcalendar.config.ContentCalendarProperties;
 import dev.bart.contentcalendar.model.Content;
 import dev.bart.contentcalendar.model.Status;
 import dev.bart.contentcalendar.model.Type;
@@ -7,12 +8,14 @@ import dev.bart.contentcalendar.repository.ContentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+@EnableConfigurationProperties(ContentCalendarProperties.class)
 @SpringBootApplication
 public class Application {
 
@@ -25,22 +28,22 @@ public class Application {
 	}
 
 	// Bootstrapping Inserting stuff after init
-	@Bean
-	CommandLineRunner commandLineRunner(ContentRepository repository) {
-		return args -> {
-			System.out.println("Hello Bart");
-			Content c = new Content(null,
-					"My video idea",
-					"My video idea about stuff",
-					Status.IDEA,
-					Type.VIDEO,
-					LocalDateTime.now(),
-					null,
-					""
-			);
-
-			repository.save(c);
-		};
-	}
+//	@Bean
+//	CommandLineRunner commandLineRunner(ContentRepository repository) {
+//		return args -> {
+//			System.out.println("Hello Bart");
+//			Content c = new Content(null,
+//					"My video idea",
+//					"My video idea about stuff",
+//					Status.IDEA,
+//					Type.VIDEO,
+//					LocalDateTime.now(),
+//					null,
+//					""
+//			);
+//
+//			repository.save(c);
+//		};
+//	}
 
 }
