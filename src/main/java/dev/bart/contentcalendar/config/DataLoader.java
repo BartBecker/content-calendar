@@ -27,9 +27,11 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //        System.out.println("Hello World!");
-
-        try(InputStream inputStream = TypeReference.class.getResourceAsStream("/data/content.json")) {
-            repository.saveAll(objectMapper.readValue(inputStream, new com.fasterxml.jackson.core.type.TypeReference<List<Content>>(){}));
+        if(repository.count() == 0) {
+            try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/content.json")) {
+                repository.saveAll(objectMapper.readValue(inputStream, new com.fasterxml.jackson.core.type.TypeReference<List<Content>>() {
+                }));
+            }
         }
     }
 }
