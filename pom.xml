@@ -14,7 +14,7 @@
 	<name>content-calendar</name>
 	<description>Content Calendar REST API</description>
 	<properties>
-		<java.version>22</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 
@@ -73,6 +73,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<env>
+							<BP_JVM_VERSION>17</BP_JVM_VERSION>
+						</env>
+					</image>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
